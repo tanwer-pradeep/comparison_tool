@@ -33,7 +33,8 @@ class Settings(BaseSettings):
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     
     # Path inside Docker container (or mapped volume)
-    ARTIFACTS_DIR: str = "/app/artifacts"
+    # Path inside Docker container (or mapped volume)
+    ARTIFACTS_DIR: str = "artifacts"
 
     model_config = SettingsConfigDict(case_sensitive=True, env_file=".env")
 
