@@ -13,6 +13,7 @@ Write-Host "Activating virtual environment..."
 .\venv\Scripts\Activate.ps1
 
 Write-Host "Installing dependencies..."
+pip install --upgrade pip
 pip install -r requirements.txt
 playwright install chromium
 

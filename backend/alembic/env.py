@@ -10,11 +10,15 @@ from alembic import context
 # Import your models here
 from app.core.database import Base
 from app.models.run import Run
-# from app.models.user import User  # if you have user model
+from app.core import config as app_config  # Avoid conflict with alembic config
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+
+# Overwrite sqlalchemy.url with value from app settings to support env vars
+config.set_main_option("sqlalchemy.url", app_config.settings.SQLALCHEMY_DATABASE_URI)
+
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
@@ -69,8 +73,10 @@ async def run_migrations_online() -> None:
     and associate a connection with the context.
 
     """
+    configuration = config.get_section(config.config_ini_section, {})
+    configuration["sqlalchemy.url"] = app_config.settings.SQLALCHEMY_DATABASE_URI
     connectable = async_engine_from_config(
-        config.get_section(config.config_ini_section, {}),
+        configuration,
         prefix="sqlalchemy.",
         poolclass=pool.NullPool,
     )
