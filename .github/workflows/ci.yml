@@ -80,5 +80,5 @@ jobs:
     - name: Type check & Build
       working-directory: ./frontend
       run: |
-        npm run build -- --no-lint 
+        npm run build 
         # Note: Skipping lint for now as scaffolding might have unused vars
