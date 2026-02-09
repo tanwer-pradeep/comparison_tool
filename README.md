@@ -79,3 +79,25 @@ A full-stack web application for automated visual regression testing, comparing 
 - `backend/app/services`: Business logic (Diff, Playwright).
 - `frontend/src/app`: Next.js App Router pages.
 - `data/artifacts`: Storage for screenshots and diff overlays.
+
+## ☁️ Hosting on GitHub
+
+### 1. Push Code to GitHub
+Since this is an initialized Git repository, you can push it to GitHub easily:
+1. Create a **new repository** on GitHub (do not initialize with README/gitignore).
+2. Run the following commands:
+   ```bash
+   git remote add origin https://github.com/YOUR_USERNAME/visual-qa-app.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+### 2. CI/CD Pipeline
+A GitHub Actions workflow is included in `.github/workflows/ci.yml`. It will automatically:
+- Run backend tests (Pytest)
+- Build the frontend (Next.js)
+- Runs on every Push to `main` and Pull Request.
+
+### 3. Secrets Management
+For the CI to pass fully or if you deploy via Actions, ensure you add repository secrets for sensitive env vars (though the current CI uses service containers with default creds for testing).
+
