@@ -15,7 +15,7 @@ Write-Host "Activating virtual environment..."
 Write-Host "Installing dependencies..."
 pip install --upgrade pip
 pip install -r requirements.txt
-playwright install chromium
+python -m playwright install chromium
 
 # Set Environment Variables for Local Dev (No Docker)
 $env:SQLALCHEMY_DATABASE_URI = "sqlite+aiosqlite:///./visual_qa.db"
@@ -27,12 +27,12 @@ $env:CELERY_RESULT_BACKEND = "db+sqlite:///celery_results.sqlite"
 $migrations = Get-ChildItem -Path "alembic/versions" -Filter "*.py"
 if ($migrations.Count -eq 0) {
     Write-Host "Creating initial database migration..."
-    alembic revision --autogenerate -m "Initial_migration"
+    python -m alembic revision --autogenerate -m "Initial_migration"
 }
 
 Write-Host "Running Database Migrations..."
-alembic upgrade head
+python -m alembic upgrade head
 
 
 Write-Host "Starting Backend Server on http://localhost:8000..."
-uvicorn app.main:app --reload --port 8000
+python -m uvicorn app.main:app --reload --port 8000
